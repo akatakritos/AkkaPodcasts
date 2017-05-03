@@ -7,12 +7,10 @@ namespace AkkaPodcasts.Core.Messages
     public class DownloadFeedCommand
     {
         public Uri Url { get; set; }
-        public string Path { get; set; }
 
-        public DownloadFeedCommand(Uri url, string path)
+        public DownloadFeedCommand(Uri url)
         {
             Url = url;
-            Path = path;
         }
     }
 }

@@ -14,12 +14,13 @@ namespace AkkaPodcasts.Core.Actors
     public class FeedDownloadActor : ReceiveActor
     {
         private readonly IActorRef _router;
-        private string _path;
+        private readonly string _path;
         private int _pendingDownloads = 0;
 
-        public FeedDownloadActor(IActorRef router)
+        public FeedDownloadActor(IActorRef router, string path)
         {
             _router = router;
+            _path = path;
 
             Receive<DownloadFeedCommand>(cmd => DownloadFeed(cmd));
             Receive<string>(feed => ParseFeed(feed));
@@ -28,8 +29,6 @@ namespace AkkaPodcasts.Core.Actors
 
         private void DownloadFeed(DownloadFeedCommand cmd)
         {
-            _path = cmd.Path;
-
             ConsoleHelper.Write(ConsoleColor.DarkYellow, "Downloading feed");
             var client = new HttpClient();
 
